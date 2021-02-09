@@ -1,6 +1,7 @@
 package com.spring.service;
 
 import com.spring.exceptions.ClientAlreadyExists;
+import com.spring.exceptions.ClientDoesntExists;
 import com.spring.model.Client;
 import com.spring.model.Employee;
 import com.spring.repository.ClientRepository;
@@ -30,28 +31,19 @@ public class ClientService {
         return clientRepository.findByFirstname(firstname);
     }
 
-
-
     public Client addClient(Client newClient) throws ClientAlreadyExists {
         String newDni = newClient.getDni();
-        if(newDni == null) throw new IllegalArgumentException("el dni no puede ser nulo");
-        if(clientRepository.existsByDni(newDni)) throw  new ClientAlreadyExists("Ya existe un cliente con el dni proporcionado");
+        if (newDni == null) throw new IllegalArgumentException("el dni no puede ser nulo");
+        if (clientRepository.existsByDni(newDni))
+            throw new ClientAlreadyExists("Ya existe un cliente con el dni proporcionado");
         return clientRepository.save(newClient);
     }
 
-
-    /*
-    public Client addClient(Client newClient) throws ClientAlreadyExists {
-        Client client = clientRepository.save(newClient);
-        return Optional.ofNullable(client)
-                .orElseThrow(() -> new ClientAlreadyExists("Ya existe un cliente con el dni proporcionado"));
-    }
-
-     */
-
-
-    public Client getByDni(String dni) {
-        return clientRepository.findByDni(dni).get(0);
+    public Client getByDni(String dni) throws ClientDoesntExists {
+        if (dni == null) throw new IllegalArgumentException("El dni proporcionado es invalido");
+        List<Client> clients = clientRepository.findByDni(dni);
+        if (clients.isEmpty()) throw new ClientDoesntExists("El cliente a buscar no existe");
+        return clients.get(0);
     }
 
     public List<Client> getPremium() {

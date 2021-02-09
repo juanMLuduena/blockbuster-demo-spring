@@ -10,6 +10,7 @@ import com.spring.service.EmployeeService;
 import com.spring.service.MovieService;
 import com.spring.service.RentService;
 import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,7 +50,7 @@ public class RentController {
         try {
             rentService.addRent(new Rent(new Employee(idEmployee), new Client(idClient), new Movie(idMovie)));
             response = ResponseEntity.status(HttpStatus.CREATED).build();
-            log.log(Level.INFO, "Entidad renta creada sin problemas");
+            log.log(Level.WARNING, "Entidad renta creada sin problemas");
         } catch (WrongData e) {
             log.log(Level.WARNING, "Credenciales incorrectos al agregar renta");
             response = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -58,7 +59,6 @@ public class RentController {
     }
 
     /*
-
      @PostMapping("/add")
     public ResponseEntity<Rent> addRent(@RequestParam String title, @RequestParam String dniClient, @RequestParam String dniEmployee){
          ResponseEntity response = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -72,6 +72,4 @@ public class RentController {
      }
 
      */
-
-
 }

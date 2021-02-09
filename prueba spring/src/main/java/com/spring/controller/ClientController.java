@@ -1,6 +1,7 @@
 package com.spring.controller;
 
 import com.spring.exceptions.ClientAlreadyExists;
+import com.spring.exceptions.ClientDoesntExists;
 import com.spring.model.Client;
 import com.spring.model.Employee;
 import com.spring.service.ClientService;
@@ -32,27 +33,32 @@ public class ClientController {
     @PostMapping("/")
     public ResponseEntity<Client> addClient(@RequestBody Client newClient) throws ClientAlreadyExists {
         ResponseEntity response = null;
-        Client client = null;
         try {
             clientService.addClient(newClient);
             response = ResponseEntity.status(HttpStatus.CREATED).body("El cliente se creo correctamente");
         }catch(ClientAlreadyExists ce){
             response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El cliente que desea cargar ya fue registrado anteriormente");
         }catch(IllegalArgumentException ie){
-            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El dni no puede ser vacio");
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El dni no puede estar vacío");
         }
         return response;
     }
 
-
     @GetMapping("/{dni}")
     public ResponseEntity<Client> getByDni(@PathVariable String dni){
-        return ResponseEntity.ok(clientService.getByDni(dni));
+        ResponseEntity response = null;
+        try{
+            response = ResponseEntity.ok(clientService.getByDni(dni));
+        }catch(ClientDoesntExists e){
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El cliente que quiere buscar no existe");
+        }catch(IllegalArgumentException ie){
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El dni no puede estar vacío");
+        }
+        return response;
     }
 
     @GetMapping("/premium")
     public ResponseEntity<List<Client>> getPremiumClients(){
         return ResponseEntity.ok(clientService.getPremium());
     }
-
 }

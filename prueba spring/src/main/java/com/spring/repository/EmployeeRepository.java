@@ -14,4 +14,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     @Query(value = "SELECT * FROM employees e WHERE e.dni = ?1 limit 1",
             nativeQuery = true)
     List<Employee> findByDni(String dni);
+
+    boolean existsByDni(String dni);
 }
