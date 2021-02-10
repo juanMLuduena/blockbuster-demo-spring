@@ -33,9 +33,14 @@ public class MovieController {
         return movieService.getAll(title);
     }
 
-    @GetMapping("/title")
-    public ResponseEntity<List<Movie>> getByTitle(@RequestParam String title){
+    @GetMapping("/title/{title}")
+    public ResponseEntity<List<Movie>> getByTitle(@PathVariable String title){
         return ResponseEntity.ok(movieService.getByTitle(title));
+    }
+
+    @GetMapping("/title/simple/{title}")
+    public ResponseEntity<Movie> getByTitleOneMovie(@PathVariable String title){
+        return ResponseEntity.ok(movieService.getByTitleSingle(title));
     }
 
     @PutMapping("/rented")

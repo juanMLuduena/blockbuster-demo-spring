@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -22,5 +23,7 @@ public class Actor {
     private String lastname;
     private Integer age;
 
-    private List<Movie> movies;
+    @ManyToOne
+    private Movie movie;
+
 }
