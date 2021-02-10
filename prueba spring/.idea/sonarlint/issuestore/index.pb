@@ -43,3 +43,7 @@ l
 <src/main/java/com/spring/exceptions/ClientAlreadyExists.java,8\b\8b763b4ead53f81be306471bcb58f39ff65b9a0f
 n
 >src/main/java/com/spring/exceptions/EmployeeAlreadyExists.java,c\5\c571629a1dd733423482a1a046f871a84bea141f
+k
+;src/main/java/com/spring/exceptions/ClientDoesntExists.java,0\7\07019a34b647d535a206036c789e96c14c1907bc
+m
+=src/main/java/com/spring/exceptions/EmployeeDoesntExists.java,c\5\c58acbf1cfdd6876c5ab16900e65103c3b4fa551

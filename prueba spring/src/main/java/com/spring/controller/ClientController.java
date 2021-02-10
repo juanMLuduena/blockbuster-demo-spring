@@ -3,13 +3,10 @@ package com.spring.controller;
 import com.spring.exceptions.ClientAlreadyExists;
 import com.spring.exceptions.ClientDoesntExists;
 import com.spring.model.Client;
-import com.spring.model.Employee;
 import com.spring.service.ClientService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

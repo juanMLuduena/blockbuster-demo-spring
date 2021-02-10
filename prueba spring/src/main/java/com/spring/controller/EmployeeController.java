@@ -1,12 +1,8 @@
 package com.spring.controller;
 
-import com.spring.exceptions.ClientAlreadyExists;
-import com.spring.exceptions.ClientDoesntExists;
 import com.spring.exceptions.EmployeeAlreadyExists;
 import com.spring.exceptions.EmployeeDoesntExists;
-import com.spring.model.Client;
 import com.spring.model.Employee;
-import com.spring.model.Person;
 import com.spring.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

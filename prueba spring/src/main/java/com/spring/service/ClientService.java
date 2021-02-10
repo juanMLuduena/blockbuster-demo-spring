@@ -3,13 +3,11 @@ package com.spring.service;
 import com.spring.exceptions.ClientAlreadyExists;
 import com.spring.exceptions.ClientDoesntExists;
 import com.spring.model.Client;
-import com.spring.model.Employee;
 import com.spring.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.Objects.isNull;
 

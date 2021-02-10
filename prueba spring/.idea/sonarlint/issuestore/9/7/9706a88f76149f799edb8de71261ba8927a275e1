@@ -1,19 +1,21 @@
 
 ]
-java:S4684*"@Replace this persistent entity with a simple POJO or DTO object.(†ö¼8åû«™ø.
+java:S4684+"@Replace this persistent entity with a simple POJO or DTO object.(†ö¼8åû«™ø.
 Y
 java:S1128
 "<Remove this unused import 'com.spring.service.MovieService'.(Ò†„î8½¹ü´ø.
+F
+java:S1128")Remove this unused import 'java.net.URI'.(Ö¦¨°8ñçê·ø.
+X	java:S125?"<This block of commented-out lines of code should be removed.(†£²İ8¤êÉ¸ø.
 \
 java:S1128	"?Remove this unused import 'com.spring.service.EmployeeService'.(Ó®Î‹8½¹ü´ø.
-[
-java:S1128">Remove this unused import 'org.w3c.dom.stylesheets.LinkStyle'.(ÙÌ¾å8åû«™ø.
-F
-java:S1128")Remove this unused import 'java.net.URI'.(Ö¦¨°8ñçê·ø.
-X	java:S125?"<This block of commented-out lines of code should be removed.(†£²İ8¤êÉ¸ø.
 L
-java:S37400"/Provide the parametrized type for this generic.(–Ëö‡8Ğœü·ø.
+java:S37401"/Provide the parametrized type for this generic.(–Ëö‡8Ğœü·ø.
 }
-java:S1128"`Remove this unused import 'org.springframework.web.servlet.support.ServletUriComponentsBuilder'.(™ƒ¹8ñçê·ø.
+java:S1128"`Remove this unused import 'org.springframework.web.servlet.support.ServletUriComponentsBuilder'.(™ƒ¹8ñçê·ø.
 Y
 java:S1128"=Remove this unused import 'com.spring.service.ClientService'.(×€Ì}8½¹ü´ø.
+[
+java:S1128">Remove this unused import 'org.w3c.dom.stylesheets.LinkStyle'.(ÙÌ¾å8åû«™ø.
+S
+java:S1128"6Remove this unused import 'lombok.extern.log4j.Log4j'.(ñÔêĞ8ÄàÒ¿ø.

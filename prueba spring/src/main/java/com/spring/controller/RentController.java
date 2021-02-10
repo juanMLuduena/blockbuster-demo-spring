@@ -1,5 +1,8 @@
 package com.spring.controller;
 
+import com.spring.exceptions.ClientDoesntExists;
+import com.spring.exceptions.EmployeeDoesntExists;
+import com.spring.exceptions.MovieAlreadyRented;
 import com.spring.exceptions.WrongData;
 import com.spring.model.Client;
 import com.spring.model.Employee;
@@ -9,28 +12,27 @@ import com.spring.service.ClientService;
 import com.spring.service.EmployeeService;
 import com.spring.service.MovieService;
 import com.spring.service.RentService;
+import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
-import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.w3c.dom.stylesheets.LinkStyle;
 
-import java.net.URI;
 import java.util.List;
 import java.util.logging.Level;
 
 @Log
+@NoArgsConstructor
 @RestController
 @RequestMapping("/rent")
 public class RentController {
 
-    private final RentService rentService;
+    private RentService rentService;
+
 
     @Autowired
-    public RentController(RentService rentService) {
+    public RentController(RentService rentService, ClientService clientService, EmployeeService employeeService, MovieService movieService) {
         this.rentService = rentService;
     }
 
@@ -44,32 +46,45 @@ public class RentController {
         rentService.addRent(newRent);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/addByIds")
     public ResponseEntity<Rent> addRent(@RequestParam Integer idMovie, @RequestParam int idClient, @RequestParam int idEmployee) throws WrongData {
         ResponseEntity response = null;
         try {
             rentService.addRent(new Rent(new Employee(idEmployee), new Client(idClient), new Movie(idMovie)));
             response = ResponseEntity.status(HttpStatus.CREATED).build();
-            log.log(Level.WARNING, "Entidad renta creada sin problemas");
+            log.log(Level.FINE, "Entidad renta creada sin problemas");
         } catch (WrongData e) {
             log.log(Level.WARNING, "Credenciales incorrectos al agregar renta");
             response = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } finally {
+            return response;
+        }
+    }
+
+
+    @PostMapping("/add")
+    public ResponseEntity<Rent> addRent(@RequestParam String title, @RequestParam String dniClient, @RequestParam String dniEmployee) {
+        ResponseEntity response = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        try {
+            rentService.addRent(title, dniClient, dniEmployee);
+            response = ResponseEntity.status(HttpStatus.CREATED).body("Carga de renta exitosa!");
+            log.log(Level.FINE, "Entidad renta creada sin problemas");
+        } catch (MovieAlreadyRented me) {
+            log.log(Level.WARNING, "La película que trato de alquilar ya estaba alquilada");
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("La película que trato de alquilar ya estaba alquilada");
+        } catch (ClientDoesntExists ce) {
+            log.log(Level.WARNING, "El cliente proporcionado no se encuentra en la base de datos");
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El cliente proporcionado no se encuentra en la base de datos");
+        } catch (EmployeeDoesntExists ee) {
+            log.log(Level.WARNING, "El empleado proporcionado no se encuentra en la base de datos");
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El empleado proporcionado no se encuentra en la base de datos");
+        } catch (WrongData e) {
+            log.log(Level.WARNING, "Credenciales incorrectos al agregar renta");
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Datos incorrectos proporcionados");
+        } catch(Exception e){
+            log.log(Level.WARNING, "Seguramente un error en MySQL");
+            response = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error desconocido");
         }
         return response;
     }
-
-    /*
-     @PostMapping("/add")
-    public ResponseEntity<Rent> addRent(@RequestParam String title, @RequestParam String dniClient, @RequestParam String dniEmployee){
-         ResponseEntity response = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-         try {
-             rentService.addRent(title, dniClient, dniEmployee);
-             response = ResponseEntity.status(HttpStatus.CREATED).build();
-         } catch (WrongData e) {
-             e.getMessage();
-         }
-         return response;
-     }
-
-     */
 }
