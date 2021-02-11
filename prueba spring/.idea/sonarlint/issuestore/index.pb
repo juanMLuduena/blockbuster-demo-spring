@@ -35,8 +35,6 @@ a
 1src/main/java/com/spring/service/RentService.java,9\2\92f873756773f007ac67f0f776edc263fd5458d2
 g
 7src/main/java/com/spring/controller/RentController.java,9\7\9706a88f76149f799edb8de71261ba8927a275e1
-d
-4src/main/java/com/spring/exceptions/MovieRented.java,6\e\6e76dcca02f5ec14b28920781b8e15e8e382656a
 b
 2src/main/java/com/spring/exceptions/WrongData.java,e\9\e9df0207a20dbec9cd94fde7ebba3ec0dbf233e0
 l
