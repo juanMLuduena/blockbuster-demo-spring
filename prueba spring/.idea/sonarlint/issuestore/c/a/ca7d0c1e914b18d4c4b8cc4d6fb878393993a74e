@@ -1,13 +1,0 @@
-
-b
-java:S4684""@Replace this persistent entity with a simple POJO or DTO object.(’í¡ßıÿÿÿÿ8‹ß¨ö÷.
-L
-java:S37401"/Provide the parametrized type for this generic.(–Ëö‡8ášî¿ø.
-h
-java:S1128"FRemove this unused import 'org.springframework.stereotype.Controller'.(øŠ—Öùÿÿÿÿ8°¦—˜ø.
-L
-java:S3740#"/Provide the parametrized type for this generic.(–Ëö‡8Çè§½ø.
-Y
-java:S1128"7Remove this unused import 'org.apache.coyote.Response'.(˜ÊŠşÿÿÿÿ8®Ë›»ø.
-R
-java:S1128"6Remove this unused import 'com.spring.model.Employee'.(Üîîf8ğØù¹ø.
