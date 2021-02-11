@@ -3,6 +3,7 @@ package com.spring.controller;
 import com.spring.exceptions.ClientAlreadyExists;
 import com.spring.exceptions.ClientDoesntExists;
 import com.spring.model.Client;
+import com.spring.model.dtos.ClientWithMovieTitleRented;
 import com.spring.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,6 +47,19 @@ public class ClientController {
         ResponseEntity response = null;
         try{
             response = ResponseEntity.ok(clientService.getByDni(dni));
+        }catch(ClientDoesntExists e){
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El cliente que quiere buscar no existe");
+        }catch(IllegalArgumentException ie){
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El dni no puede estar vacío");
+        }
+        return response;
+    }
+
+    @GetMapping("/history/{dni}")
+    public ResponseEntity<ClientWithMovieTitleRented> getMovieRentedTitleByDni(@PathVariable String dni){
+        ResponseEntity response = null;
+        try{
+            response = ResponseEntity.ok(clientService.getMovieRentedTitleByDni(dni));
         }catch(ClientDoesntExists e){
             response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El cliente que quiere buscar no existe");
         }catch(IllegalArgumentException ie){

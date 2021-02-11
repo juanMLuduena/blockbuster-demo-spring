@@ -19,12 +19,13 @@ public class Movie {
     private String title;
     private Boolean rented;
 
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Rent> rents;
 
     public Movie(Integer id) {
         this.id = id;
     }
 
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Rent> rents;
+
 
 }

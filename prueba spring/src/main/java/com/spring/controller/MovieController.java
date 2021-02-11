@@ -71,5 +71,9 @@ public class MovieController {
         return response;
     }
 
+    @GetMapping("/test/{dni}")
+    public List<String> testMovieTitle(@PathVariable String dni){
+        return movieService.getMovieTitlesByClientDni(dni);
+    }
 
 }

@@ -63,4 +63,8 @@ public class MovieService {
         List<Movie> movies = movieRepository.findByTitle(title);
         return (movies.isEmpty()) ? null : movies.get(0);
     }
+
+    public List<String> getMovieTitlesByClientDni(String dni) {
+        return movieRepository.findMovieTitlesByClientDni(dni);
+    }
 }

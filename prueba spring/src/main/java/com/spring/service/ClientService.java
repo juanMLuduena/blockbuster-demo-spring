@@ -3,6 +3,7 @@ package com.spring.service;
 import com.spring.exceptions.ClientAlreadyExists;
 import com.spring.exceptions.ClientDoesntExists;
 import com.spring.model.Client;
+import com.spring.model.dtos.ClientWithMovieTitleRented;
 import com.spring.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,10 +16,12 @@ import static java.util.Objects.isNull;
 public class ClientService {
 
     private ClientRepository clientRepository;
+    private MovieService movieService;
 
     @Autowired
-    public ClientService(ClientRepository clientRepository) {
+    public ClientService(ClientRepository clientRepository, MovieService movieService) {
         this.clientRepository = clientRepository;
+        this.movieService = movieService;
     }
 
 
@@ -46,5 +49,17 @@ public class ClientService {
 
     public List<Client> getPremium() {
         return clientRepository.findByPremium(true);
+    }
+
+    public ClientWithMovieTitleRented getMovieRentedTitleByDni(String dni) throws ClientDoesntExists {
+        Client client = this.getByDni(dni);
+        List<String> movieTitles = movieService.getMovieTitlesByClientDni(dni);
+        ClientWithMovieTitleRented clientDto = new ClientWithMovieTitleRented();
+        clientDto.setFirstname(client.getFirstname());
+        clientDto.setLastname(client.getLastname());
+        clientDto.setDni(dni);
+        clientDto.setMovieTitles(movieTitles);
+        return clientDto;
+
     }
 }
