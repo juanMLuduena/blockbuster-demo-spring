@@ -1,5 +1,7 @@
 package com.spring.service;
 
+import com.spring.exceptions.BlockbusterAlreadyExistsException;
+import com.spring.exceptions.BlockbusterDoesntExistsException;
 import com.spring.exceptions.ClientAlreadyExists;
 import com.spring.exceptions.ClientDoesntExists;
 import com.spring.model.Client;
@@ -25,25 +27,27 @@ public class ClientService {
     }
 
 
-    public List<Client> getAll(String firstname) {
+    public List<Client> getAll(String firstname) throws BlockbusterDoesntExistsException {
         if (isNull(firstname)) {
             return clientRepository.findAll();
         }
-        return clientRepository.findByFirstname(firstname);
+        List<Client> clientByFirstname = clientRepository.findByFirstname(firstname);
+        if(isNull(clientByFirstname)) throw new BlockbusterDoesntExistsException("No se encontró un cliente llamado " + firstname + ".");
+        return clientByFirstname;
     }
 
-    public Client addClient(Client newClient) throws ClientAlreadyExists {
+    public Client addClient(Client newClient) throws BlockbusterAlreadyExistsException {
         String newDni = newClient.getDni();
-        if (newDni == null) throw new IllegalArgumentException("el dni no puede ser nulo");
+        if (newDni == null) throw new IllegalArgumentException("El dni no puede ser nulo.");
         if (clientRepository.existsByDni(newDni))
-            throw new ClientAlreadyExists("Ya existe un cliente con el dni proporcionado");
+            throw new BlockbusterAlreadyExistsException("No se pudo crear el cliente porque ya existe un cliente con el dni proporcionado");
         return clientRepository.save(newClient);
     }
 
-    public Client getByDni(String dni) throws ClientDoesntExists {
-        if (dni == null) throw new IllegalArgumentException("El dni proporcionado es invalido");
+    public Client getByDni(String dni) throws BlockbusterDoesntExistsException {
+        if (dni == null) throw new IllegalArgumentException("El dni no puede ser nulo.");
         List<Client> clients = clientRepository.findByDni(dni);
-        if (clients.isEmpty()) throw new ClientDoesntExists("El cliente a buscar no existe");
+        if (clients.isEmpty()) throw new BlockbusterDoesntExistsException("No se encontró un cliente con el dni: " + dni + ".");
         return clients.get(0);
     }
 
@@ -51,7 +55,7 @@ public class ClientService {
         return clientRepository.findByPremium(true);
     }
 
-    public ClientWithMovieTitleRented getMovieRentedTitleByDni(String dni) throws ClientDoesntExists {
+    public ClientWithMovieTitleRented getMovieRentedTitleByDni(String dni) throws BlockbusterDoesntExistsException {
         Client client = this.getByDni(dni);
         List<String> movieTitles = movieService.getMovieTitlesByClientDni(dni);
         ClientWithMovieTitleRented clientDto = new ClientWithMovieTitleRented();
