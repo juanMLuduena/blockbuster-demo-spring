@@ -8,4 +8,6 @@ SET GLOBAL time_zone = '-3:00';
 
 Mas abajo dejo el link de postman por si quiere probar los endpoints
 
-COLECCION POSTMAN: https://www.getpostman.com/collections/f90f7f0f2095da3a6328
+COLECCION POSTMAN
+*BLOCKBUSTER: https://www.getpostman.com/collections/f90f7f0f2095da3a6328
+*ACTORS: https://www.getpostman.com/collections/be32ddfa846851dc5a3a

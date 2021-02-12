@@ -28,7 +28,7 @@ public class ActorService {
     public Movie getMovieByTitle(String title){
         Map<String, String> pathVariables = new HashMap<String, String>();
         pathVariables.put("title", title);
-        Movie movie = restClient.getForObject("http://localhost:8080/movie/title/simple/{title}",Movie.class,pathVariables);
+        Movie movie = restClient.getForObject("http://localhost:8080/movie/title/single/{title}",Movie.class,pathVariables);
         return movie;
     }
 

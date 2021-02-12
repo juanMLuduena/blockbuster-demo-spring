@@ -54,7 +54,7 @@ public class MovieController {
         return response;
     }
 
-    @GetMapping("/title/simple/{title}")
+    @GetMapping("/title/single/{title}")
     public ResponseEntity<Object> getByTitleOneMovie(@PathVariable String title) {
         ResponseEntity<Object> response;
         try {
