@@ -30,7 +30,7 @@ public class ClientService {
             return clientRepository.findAll();
         }
         List<Client> clientByFirstname = clientRepository.findByFirstname(firstname);
-        if(isNull(clientByFirstname)) throw new BlockbusterDoesntExistsException("No se encontró un cliente llamado " + firstname + ".");
+        if(clientByFirstname.isEmpty()) throw new BlockbusterDoesntExistsException("No se encontró un cliente llamado " + firstname + ".");
         return clientByFirstname;
     }
 

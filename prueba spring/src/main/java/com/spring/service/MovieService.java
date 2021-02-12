@@ -31,7 +31,7 @@ public class MovieService {
             return movieRepository.findAll();
         }
         List<Movie> moviesByTitle = movieRepository.findByTitle(title);
-        if (isNull(moviesByTitle))
+        if (moviesByTitle.isEmpty())
             throw new BlockbusterDoesntExistsException("No se encontró ninguna película llamada " + title + ".");
         return moviesByTitle;
     }
@@ -61,14 +61,14 @@ public class MovieService {
     public Movie findById(Integer idMovie) throws BlockbusterDoesntExistsException {
         if (idMovie == null) throw new IllegalArgumentException("El ID no puede ser nulo.");
         Optional<Movie> movieById = movieRepository.findById(idMovie);
-        if (isNull(movieById)) throw new BlockbusterDoesntExistsException("No se pudo encontrar la película.");
+        if (movieById.isEmpty()) throw new BlockbusterDoesntExistsException("No se pudo encontrar la película.");
         return movieById.get();
     }
 
     public Movie getByTitleSingle(String title) throws BlockbusterDoesntExistsException {
         if (title == null) throw new IllegalArgumentException("No se proporciono un titulo para la búsqueda.");
         List<Movie> movies = movieRepository.findByTitle(title);
-        if(isNull(movies)) throw new BlockbusterDoesntExistsException("No se encontró ninguna película llamada " + title + ".");
+        if(movies.isEmpty()) throw new BlockbusterDoesntExistsException("No se encontró ninguna película llamada " + title + ".");
         return  movies.get(0);
     }
 

@@ -44,4 +44,8 @@ class ClientServiceGetAllTest {
         assertEquals(clientList, clientListResult);
     }
 
+    //Camino feliz poniendo nombre y encontrando usuarios
+    //Camino infeliz poniendo nombre pero sin encontrar usuarios
+
+
 }

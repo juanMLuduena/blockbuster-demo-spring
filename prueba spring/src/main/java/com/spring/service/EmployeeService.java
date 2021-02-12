@@ -26,7 +26,7 @@ public class EmployeeService {
             return employeeRepository.findAll();
         }
         List<Employee> employeeByFirstname = employeeRepository.findByFirstname(firstname);
-        if(isNull(employeeByFirstname)) throw new BlockbusterDoesntExistsException("No se encontró un empleado llamado " + firstname + ".");
+        if(employeeByFirstname.isEmpty()) throw new BlockbusterDoesntExistsException("No se encontró un empleado llamado " + firstname + ".");
         return employeeByFirstname;
     }
 
