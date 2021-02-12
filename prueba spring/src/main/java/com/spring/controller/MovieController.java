@@ -1,5 +1,7 @@
 package com.spring.controller;
 
+import com.spring.exceptions.BlockbusterAlreadyExistsException;
+import com.spring.exceptions.BlockbusterDoesntExistsException;
 import com.spring.exceptions.MovieAlreadyRented;
 import com.spring.model.Movie;
 import com.spring.service.MovieService;
@@ -24,56 +26,80 @@ public class MovieController {
     }
 
     @PostMapping("/")
-    public void addMovie(@RequestBody Movie newMovie){
+    public void addMovie(@RequestBody Movie newMovie) {
         movieService.addMovie(newMovie);
     }
 
     @GetMapping("/")
-    public List<Movie> getAll(@RequestParam(required = false)String title){
-        return movieService.getAll(title);
+    public ResponseEntity<Object> getAll(@RequestParam(required = false) String title) {
+        ResponseEntity<Object> response;
+        try {
+            response = ResponseEntity.ok(movieService.getAll(title));
+            log.log(Level.FINE, "Se listaron las películas de manera exitosa.");
+        } catch (BlockbusterDoesntExistsException e) {
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            log.log(Level.WARNING, e.getMessage());
+        }
+        return response;
     }
 
     @GetMapping("/title/{title}")
-    public ResponseEntity<List<Movie>> getByTitle(@PathVariable String title){
-        return ResponseEntity.ok(movieService.getByTitle(title));
+    public ResponseEntity<Object> getByTitle(@PathVariable String title) {
+        ResponseEntity<Object> response;
+        try {
+            response = ResponseEntity.ok(movieService.getAll(title));
+            log.log(Level.FINE, "Se listaron las películas por titulo de manera exitosa.");
+        } catch (BlockbusterDoesntExistsException e) {
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            log.log(Level.WARNING, e.getMessage());
+        }
+        return response;
     }
 
     @GetMapping("/title/simple/{title}")
-    public ResponseEntity<Movie> getByTitleOneMovie(@PathVariable String title){
-        return ResponseEntity.ok(movieService.getByTitleSingle(title));
+    public ResponseEntity<Object> getByTitleOneMovie(@PathVariable String title) {
+        ResponseEntity<Object> response;
+        try {
+            response = ResponseEntity.ok(movieService.getByTitleSingle(title));
+            log.log(Level.FINE, "Se listaron los clientes de manera exitosa.");
+        } catch (BlockbusterDoesntExistsException e) {
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            log.log(Level.WARNING, e.getMessage());
+        }
+        return response;
     }
 
     @PutMapping("/rented")
-    public ResponseEntity rentMovie(Integer idMovie) throws MovieAlreadyRented {
-        ResponseEntity response = null;
+    public ResponseEntity<Object> rentMovie(Integer idMovie) throws MovieAlreadyRented {
+        ResponseEntity<Object> response;
         try {
             movieService.rentMovie(movieService.findById(idMovie));
             response = ResponseEntity.status(HttpStatus.OK).body("La renta se inicio con éxito");
             log.log(Level.FINE, "Modificación en Movie exitosa");
-        }catch (MovieAlreadyRented e){
-            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("La renta que desea iniciar ya se encontraba activa");
-            log.log(Level.FINE, "Modificación en movie fallida");
+        } catch (BlockbusterAlreadyExistsException | BlockbusterDoesntExistsException e) {
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            log.log(Level.WARNING, e.getMessage());
         }
         return response;
     }
 
     @PutMapping("/unRented")
-    public ResponseEntity unRentMovie(Integer idMovie)  {
-        ResponseEntity response = null;
+    public ResponseEntity<Object> unRentMovie(Integer idMovie) {
+        ResponseEntity<Object> response;
         try {
             movieService.unRentMovie(movieService.findById(idMovie));
             response = ResponseEntity.status(HttpStatus.OK).body("La renta se finalizo con éxito");
             log.log(Level.FINE, "Modificación en Movie exitosa");
-        }catch (MovieAlreadyRented e){
-            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("La renta que desea finalizar no se encuentra activa");
-            log.log(Level.FINE, "Modificación en movie fallida");
+        } catch (BlockbusterAlreadyExistsException | BlockbusterDoesntExistsException e) {
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            log.log(Level.WARNING, e.getMessage());
         }
         return response;
     }
 
     @GetMapping("/test/{dni}")
-    public List<String> testMovieTitle(@PathVariable String dni){
-        return movieService.getMovieTitlesByClientDni(dni);
+    public ResponseEntity<Object> testMovieTitle(@PathVariable String dni) {
+        return ResponseEntity.ok(movieService.getMovieTitlesByClientDni(dni));
     }
 
 }
