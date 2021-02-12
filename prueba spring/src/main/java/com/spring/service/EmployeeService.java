@@ -1,5 +1,7 @@
 package com.spring.service;
 
+import com.spring.exceptions.BlockbusterAlreadyExistsException;
+import com.spring.exceptions.BlockbusterDoesntExistsException;
 import com.spring.exceptions.EmployeeAlreadyExists;
 import com.spring.exceptions.EmployeeDoesntExists;
 import com.spring.model.Employee;
@@ -21,31 +23,28 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public Employee addEmployee(Employee newEmployee) throws EmployeeAlreadyExists {
-        String newDni = newEmployee.getDni();
-        if (newDni == null) throw new IllegalArgumentException("el dni no puede ser nulo");
-        if (employeeRepository.existsByDni(newDni)) throw new EmployeeAlreadyExists("Ya existe ese cliente");
-        return employeeRepository.save(newEmployee);
-    }
-
-    public List<Employee> getAll(String firstname) {
+    public List<Employee> getAll(String firstname) throws BlockbusterDoesntExistsException {
         if (isNull(firstname)) {
             return employeeRepository.findAll();
         }
-        return employeeRepository.findByFirstname(firstname);
+        List<Employee> employeeByFirstname = employeeRepository.findByFirstname(firstname);
+        if(isNull(employeeByFirstname)) throw new BlockbusterDoesntExistsException("No se encontró un empleado llamado " + firstname + ".");
+        return employeeByFirstname;
     }
 
-    public Employee getByDni(String dni) throws EmployeeDoesntExists {
+    public Employee addEmployee(Employee newEmployee) throws  BlockbusterAlreadyExistsException {
+        String newDni = newEmployee.getDni();
+        if (newDni == null) throw new IllegalArgumentException("El dni no puede ser nulo.");
+        if (employeeRepository.existsByDni(newDni))
+            throw new BlockbusterAlreadyExistsException("No se pudo crear el empleado porque ya existe un empleado con el dni proporcionado");
+        return employeeRepository.save(newEmployee);
+    }
+
+    public Employee getByDni(String dni) throws BlockbusterDoesntExistsException {
         if (dni == null) throw new IllegalArgumentException("El dni proporcionado es invalido");
         List<Employee> employees = employeeRepository.findByDni(dni);
-        if (employees.isEmpty()) throw new EmployeeDoesntExists("El cliente a buscar no existe");
+        if (employees.isEmpty()) throw new BlockbusterDoesntExistsException("No se encontró un empleado con el dni: " + dni + ".");
         return employees.get(0);
     }
 
-    /*
-    public Employee findById(Integer personId) {
-        return personRepository.findById(personId);
-    }
-
- */
 }

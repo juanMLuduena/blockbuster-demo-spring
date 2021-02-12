@@ -1,16 +1,18 @@
 package com.spring.controller;
 
-import com.spring.exceptions.EmployeeAlreadyExists;
-import com.spring.exceptions.EmployeeDoesntExists;
+import com.spring.exceptions.BlockbusterAlreadyExistsException;
+import com.spring.exceptions.BlockbusterDoesntExistsException;
 import com.spring.model.Employee;
 import com.spring.service.EmployeeService;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.logging.Level;
 
+@Log
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
@@ -24,33 +26,39 @@ public class EmployeeController {
     }
 
     @GetMapping("/")
-    public List<Employee> getAll(@RequestParam(required = false) String firstname) {
-        return employeeService.getAll(firstname);
+    public ResponseEntity<Object> getAll(@RequestParam(required = false) String firstname) {
+        ResponseEntity<Object> response;
+        try {
+            response = ResponseEntity.ok(employeeService.getAll(firstname));
+            log.log(Level.FINE, "Se listaron los empleados de manera exitosa.");
+        } catch (BlockbusterDoesntExistsException e) {
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            log.log(Level.WARNING, e.getMessage());
+        }
+        return response;
     }
 
     @PostMapping("/")
-    public ResponseEntity<Employee> addEmployee(@RequestBody Employee newEmployee) {
-        ResponseEntity response = null;
+    public ResponseEntity<Object> addEmployee(@RequestBody Employee newEmployee) {
+        ResponseEntity<Object> response;
         try {
             employeeService.addEmployee(newEmployee);
             response = ResponseEntity.status(HttpStatus.CREATED).body("El empleado se creo correctamente");
-        } catch (EmployeeAlreadyExists e) {
-            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El empleado que desea cargar ya fue registrado anteriormente");
-        } catch (IllegalArgumentException ie) {
-            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El dni no puede estar vacío");
+        } catch (BlockbusterAlreadyExistsException | IllegalArgumentException e ) {
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            log.log(Level.WARNING, e.getMessage());
         }
         return response;
     }
 
     @GetMapping("/dni")
-    public ResponseEntity<List<Employee>> getByDni(@RequestParam String dni) {
-        ResponseEntity response = null;
+    public ResponseEntity<Object> getByDni(@RequestParam String dni) {
+        ResponseEntity<Object> response;
         try {
             response = ResponseEntity.ok(employeeService.getByDni(dni));
-        } catch (EmployeeDoesntExists e){
-            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El employee que quiere buscar no existe");
-        } catch (IllegalArgumentException ie) {
-            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El dni no puede estar vacío");
+        } catch (BlockbusterDoesntExistsException | IllegalArgumentException e) {
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            log.log(Level.WARNING, e.getMessage());
         }
         return response;
     }

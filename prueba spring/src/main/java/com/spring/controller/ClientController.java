@@ -26,7 +26,7 @@ public class ClientController {
 
     @GetMapping("/")
     public ResponseEntity<Object> getAll(@RequestParam(required = false) String firstname) {
-        ResponseEntity<Object> response = null;
+        ResponseEntity<Object> response;
         try {
             response = ResponseEntity.ok(clientService.getAll(firstname));
             log.log(Level.FINE, "Se listaron los clientes de manera exitosa.");
@@ -39,7 +39,7 @@ public class ClientController {
 
     @PostMapping("/")
     public ResponseEntity<Object> addClient(@RequestBody Client newClient) {
-        ResponseEntity<Object> response = null;
+        ResponseEntity<Object> response;
         try {
             clientService.addClient(newClient);
             response = ResponseEntity.status(HttpStatus.CREATED).body("El cliente se creo correctamente.");
@@ -52,7 +52,7 @@ public class ClientController {
 
     @GetMapping("/{dni}")
     public ResponseEntity<Object> getByDni(@PathVariable String dni) {
-        ResponseEntity<Object> response = null;
+        ResponseEntity<Object> response;
         try {
             response = ResponseEntity.ok(clientService.getByDni(dni));
         } catch (BlockbusterDoesntExistsException | IllegalArgumentException e) {
@@ -64,7 +64,7 @@ public class ClientController {
 
     @GetMapping("/history/{dni}")
     public ResponseEntity<Object> getMovieRentedTitleByDni(@PathVariable String dni) {
-        ResponseEntity<Object> response = null;
+        ResponseEntity<Object> response;
         try {
             response = ResponseEntity.ok(clientService.getMovieRentedTitleByDni(dni));
         } catch (BlockbusterDoesntExistsException | IllegalArgumentException e) {
