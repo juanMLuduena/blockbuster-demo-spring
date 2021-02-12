@@ -20,9 +20,6 @@ import static org.mockito.MockitoAnnotations.*;
 class ClientServiceGetAllTest {
 
     @Mock
-    MovieService movieService;
-
-    @Mock
     ClientRepository clientRepository;
 
     @InjectMocks
