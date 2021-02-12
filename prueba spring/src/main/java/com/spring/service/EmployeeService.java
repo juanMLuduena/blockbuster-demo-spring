@@ -2,8 +2,6 @@ package com.spring.service;
 
 import com.spring.exceptions.BlockbusterAlreadyExistsException;
 import com.spring.exceptions.BlockbusterDoesntExistsException;
-import com.spring.exceptions.EmployeeAlreadyExists;
-import com.spring.exceptions.EmployeeDoesntExists;
 import com.spring.model.Employee;
 import com.spring.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;

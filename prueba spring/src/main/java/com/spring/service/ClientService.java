@@ -2,8 +2,6 @@ package com.spring.service;
 
 import com.spring.exceptions.BlockbusterAlreadyExistsException;
 import com.spring.exceptions.BlockbusterDoesntExistsException;
-import com.spring.exceptions.ClientAlreadyExists;
-import com.spring.exceptions.ClientDoesntExists;
 import com.spring.model.Client;
 import com.spring.model.dtos.ClientWithMovieTitleRented;
 import com.spring.repository.ClientRepository;

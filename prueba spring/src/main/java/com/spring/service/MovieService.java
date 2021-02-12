@@ -2,7 +2,6 @@ package com.spring.service;
 
 import com.spring.exceptions.BlockbusterAlreadyExistsException;
 import com.spring.exceptions.BlockbusterDoesntExistsException;
-import com.spring.exceptions.MovieAlreadyRented;
 import com.spring.model.Movie;
 import com.spring.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;

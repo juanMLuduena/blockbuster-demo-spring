@@ -2,7 +2,6 @@ package com.spring.controller;
 
 import com.spring.exceptions.BlockbusterAlreadyExistsException;
 import com.spring.exceptions.BlockbusterDoesntExistsException;
-import com.spring.exceptions.MovieAlreadyRented;
 import com.spring.model.Movie;
 import com.spring.service.MovieService;
 import lombok.extern.java.Log;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.logging.Level;
 
 @Log
@@ -70,7 +68,7 @@ public class MovieController {
     }
 
     @PutMapping("/rented")
-    public ResponseEntity<Object> rentMovie(Integer idMovie) throws MovieAlreadyRented {
+    public ResponseEntity<Object> rentMovie(Integer idMovie){
         ResponseEntity<Object> response;
         try {
             movieService.rentMovie(movieService.findById(idMovie));
