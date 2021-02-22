@@ -22,8 +22,9 @@ public class MovieService {
     }
 
 
-    public void addMovie(Movie newMovie) {
-        movieRepository.save(newMovie);
+    public Movie addMovie(Movie newMovie) {
+        if (newMovie.getTitle() == null) throw new IllegalArgumentException("La pelicula que quiere agregar no cuenta con titulo");
+        return movieRepository.save(newMovie);
     }
 
     public List<Movie> getAll(String title) throws BlockbusterDoesntExistsException {

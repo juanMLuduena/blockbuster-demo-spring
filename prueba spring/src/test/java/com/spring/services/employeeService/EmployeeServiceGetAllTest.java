@@ -42,7 +42,7 @@ public class EmployeeServiceGetAllTest {
         assertEquals(employeeList, employeeListResult);
     }
 
-    //Camino feliz poniendo nombre y encontrando clientes
+    //Camino feliz poniendo nombre y encontrando empleados
     @Test
     void getEmployeeByFirstNameOkTest()throws BlockbusterDoesntExistsException{
         employeeList = new ArrayList<>();
@@ -53,7 +53,7 @@ public class EmployeeServiceGetAllTest {
         assertEquals(employeeList, employeeListResult);
     }
 
-    //Camino infeliz poniendo nombre pero sin encontrar clientes
+    //Camino infeliz poniendo nombre pero sin encontrar empleados
     @Test
     void getEmployeeByFirstNameThrowBlockBusterDoesntExistsExceptionTest() throws BlockbusterDoesntExistsException{
         employeeList = Collections.emptyList();
