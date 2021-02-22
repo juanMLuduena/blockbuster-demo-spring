@@ -4,15 +4,12 @@ import com.spring.exceptions.BlockbusterAlreadyExistsException;
 import com.spring.exceptions.BlockbusterDoesntExistsException;
 import com.spring.model.Client;
 import com.spring.service.ClientService;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.logging.Level;
 
-@Log
 @RestController
 @RequestMapping("/client")
 public class ClientController {

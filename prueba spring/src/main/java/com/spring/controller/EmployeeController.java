@@ -4,15 +4,11 @@ import com.spring.exceptions.BlockbusterAlreadyExistsException;
 import com.spring.exceptions.BlockbusterDoesntExistsException;
 import com.spring.model.Employee;
 import com.spring.service.EmployeeService;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.logging.Level;
-
-@Log
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
@@ -31,7 +27,8 @@ public class EmployeeController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Object> addEmployee(@RequestBody Employee newEmployee) {
+    public ResponseEntity<Object> addEmployee(@RequestBody Employee newEmployee) throws BlockbusterAlreadyExistsException {
+        employeeService.addEmployee(newEmployee);
         return ResponseEntity.status(HttpStatus.CREATED).body("El empleado se creo correctamente");
     }
 
