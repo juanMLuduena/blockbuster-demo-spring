@@ -26,41 +26,17 @@ public class EmployeeController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<Object> getAll(@RequestParam(required = false) String firstname) {
-        ResponseEntity<Object> response;
-        try {
-            response = ResponseEntity.ok(employeeService.getAll(firstname));
-            log.log(Level.FINE, "Se listaron los empleados de manera exitosa.");
-        } catch (BlockbusterDoesntExistsException e) {
-            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-            log.log(Level.WARNING, e.getMessage());
-        }
-        return response;
+    public ResponseEntity<Object> getAll(@RequestParam(required = false) String firstname) throws BlockbusterDoesntExistsException {
+        return ResponseEntity.ok(employeeService.getAll(firstname));
     }
 
     @PostMapping("/")
     public ResponseEntity<Object> addEmployee(@RequestBody Employee newEmployee) {
-        ResponseEntity<Object> response;
-        try {
-            employeeService.addEmployee(newEmployee);
-            response = ResponseEntity.status(HttpStatus.CREATED).body("El empleado se creo correctamente");
-        } catch (BlockbusterAlreadyExistsException | IllegalArgumentException e ) {
-            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-            log.log(Level.WARNING, e.getMessage());
-        }
-        return response;
+        return ResponseEntity.status(HttpStatus.CREATED).body("El empleado se creo correctamente");
     }
 
     @GetMapping("/dni")
-    public ResponseEntity<Object> getByDni(@RequestParam String dni) {
-        ResponseEntity<Object> response;
-        try {
-            response = ResponseEntity.ok(employeeService.getByDni(dni));
-        } catch (BlockbusterDoesntExistsException | IllegalArgumentException e) {
-            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-            log.log(Level.WARNING, e.getMessage());
-        }
-        return response;
+    public ResponseEntity<Object> getByDni(@RequestParam String dni) throws BlockbusterDoesntExistsException {
+        return ResponseEntity.ok(employeeService.getByDni(dni));
     }
-
 }

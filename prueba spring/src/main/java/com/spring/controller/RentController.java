@@ -35,16 +35,8 @@ public class RentController {
 
 
     @PostMapping("/")
-    public ResponseEntity<Object> addRent(@RequestParam String title, @RequestParam String dniClient, @RequestParam String dniEmployee) {
-        ResponseEntity response;
-        try {
-            rentService.addRent(title, dniClient, dniEmployee);
-            response = ResponseEntity.status(HttpStatus.CREATED).body("Carga de renta exitosa!");
-            log.log(Level.FINE, "Entidad renta creada sin problemas");
-        } catch (BlockbusterDoesntExistsException | BlockbusterAlreadyExistsException | IllegalArgumentException e) {
-            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-            log.log(Level.WARNING, e.getMessage());
-        }
-        return response;
+    public ResponseEntity<Object> addRent(@RequestParam String title, @RequestParam String dniClient, @RequestParam String dniEmployee) throws BlockbusterAlreadyExistsException, BlockbusterDoesntExistsException {
+        rentService.addRent(title, dniClient, dniEmployee);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Carga de renta exitosa!");
     }
 }
