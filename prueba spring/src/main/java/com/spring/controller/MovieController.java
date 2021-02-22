@@ -4,7 +4,6 @@ import com.spring.exceptions.BlockbusterAlreadyExistsException;
 import com.spring.exceptions.BlockbusterDoesntExistsException;
 import com.spring.model.Movie;
 import com.spring.service.MovieService;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

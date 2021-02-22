@@ -28,6 +28,12 @@ public class Person {
         this.id = id;
     }
 
+    public Person(String firstname, String lastname, String dni){
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.dni = dni;
+    }
+
 }
 
 

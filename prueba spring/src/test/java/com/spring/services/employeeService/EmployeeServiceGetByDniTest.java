@@ -1,9 +1,9 @@
-package com.spring.services.clientService;
+package com.spring.services.employeeService;
 
 import com.spring.exceptions.BlockbusterDoesntExistsException;
-import com.spring.model.Client;
-import com.spring.repository.ClientRepository;
-import com.spring.service.ClientService;
+import com.spring.model.Employee;
+import com.spring.repository.EmployeeRepository;
+import com.spring.service.EmployeeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -16,40 +16,40 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.openMocks;
-
-public class ClientServiceGetByDniTest {
+public class EmployeeServiceGetByDniTest {
 
     @Mock
-    ClientRepository clientRepository;
+    EmployeeRepository employeeRepository;
 
     @InjectMocks
-    ClientService clientService;
+    EmployeeService employeeService;
 
+    List<Employee> employeeList;
 
     @BeforeEach
-    public void setUp() {
+    public void setUp(){
         openMocks(this);
     }
 
-    List<Client> clientList;
 
-    //Camino feliz encuentro al cliente que busque por dni
+    //Camino feliz encuentro al empleado que busque por dni
     @Test
     void getByDniOkTest() throws BlockbusterDoesntExistsException {
-        clientList = mock(List.class);
-        when(clientRepository.findByDni("123")).thenReturn(clientList);
-        Client clientResult = clientService.getByDni("123");
-        verify(clientRepository,times(1)).findByDni("123");
-        assertEquals(clientList.get(0),clientResult);
+        employeeList = new ArrayList<>();
+        employeeList.add(mock(Employee.class));
+        when(employeeRepository.findByDni("123")).thenReturn(employeeList);
+        Employee employeeResult = employeeService.getByDni("123");
+        verify(employeeRepository,times(1)).findByDni("123");
+        assertEquals(employeeList.get(0),employeeResult);
     }
 
     //Camino infeliz no encuentro al cliente que busque por dni
     @Test
     void getByDniThrowBlockbusterDoesntExistsExceptionTest() throws BlockbusterDoesntExistsException {
-        clientList = new ArrayList<>();
-        when(clientRepository.findByDni("123")).thenReturn(clientList);
+        employeeList = new ArrayList<>();
+        when(employeeRepository.findByDni("123")).thenReturn(employeeList);
         assertThrows(BlockbusterDoesntExistsException.class,()->{
-            clientService.getByDni("123");
+            employeeService.getByDni("123");
         });
     }
 
@@ -57,8 +57,7 @@ public class ClientServiceGetByDniTest {
     @Test
     void getByDniThrowIllegalArgumentExceptionTest(){
         assertThrows(IllegalArgumentException.class,()->{
-            clientService.getByDni(null);
+            employeeService.getByDni(null);
         });
     }
-
 }

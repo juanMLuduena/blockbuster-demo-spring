@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "employees")
-public class Employee extends Person{
+public class Employee extends Person {
 
 
     private Integer salary;
@@ -20,6 +20,11 @@ public class Employee extends Person{
 
     public Employee(Integer id) {
         super(id);
+    }
+
+    public Employee(String firstname, String lastname, String dni) {
+        super(firstname, lastname, dni);
+
     }
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
