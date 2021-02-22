@@ -1,6 +1,7 @@
 package com.spring.service;
 
-import com.spring.exceptions.*;
+import com.spring.exceptions.BlockbusterAlreadyExistsException;
+import com.spring.exceptions.BlockbusterDoesntExistsException;
 import com.spring.model.Client;
 import com.spring.model.Employee;
 import com.spring.model.Movie;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.Objects.isNull;
 

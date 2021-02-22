@@ -4,7 +4,6 @@ import com.spring.exceptions.BlockbusterDoesntExistsException;
 import com.spring.model.Client;
 import com.spring.repository.ClientRepository;
 import com.spring.service.ClientService;
-import com.spring.service.MovieService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -13,9 +12,10 @@ import org.mockito.Mock;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
-import static org.mockito.MockitoAnnotations.*;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 class ClientServiceGetAllTest {
 
